@@ -36,6 +36,7 @@ class Drawer {
     }
 
     mouse(p, x,y){
+
         if ((x > this.Left) && (x < (this.Right)) && (y > this.Top) && (y < this.Bottom)) {
             this.gui_folder_defaults.open()
             this.gui_folder_draw_options.open()
@@ -46,10 +47,14 @@ class Drawer {
             this.selected = false
         }
     }
-    mousewheel(p, x,y,count) {
+    mousewheel(p, x, y, count) {
         if ((x > this.Left) && (x < (this.Right)) && (y > this.Top) && (y < this.Bottom)) {
             return count
-        } 
+        } else {
+            return 1
+        }
+    }    
+    mouseMoved(p, x,y){
     }
 
     key(key) {

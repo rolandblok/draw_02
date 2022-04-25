@@ -15,8 +15,8 @@ var uniqueID = (function() {
 var gui = new dat.GUI();
 var settings = []
 settings.draw_modes  = ['TEMPLEET', 'salesman', 'man_draw']
-// settings.draw_mode = settings.draw_modes[settings.draw_modes.length-1]
-settings.draw_mode = settings.draw_modes[0]
+settings.draw_mode = settings.draw_modes[settings.draw_modes.length-1]
+// settings.draw_mode = settings.draw_modes[0]
 gui.add(settings, 'draw_mode', settings.draw_modes).onChange(function(v){set_draw_mode()})
 settings.invert_color = false
 gui.add(settings, 'invert_color').onChange(function (v) { cvs.draw() })
@@ -130,8 +130,11 @@ let sketch = function(p) {
     p.mouseDragged(event)
   }
   p.mouseWheel = function(event) {
-    current_drawers.mousewheel(this, event.clientX, event.clientY, event.wheelDelta / 100)
+    current_drawers.mousewheel(this, event.clientX, event.clientY, event.delta / 100)
 
+  }
+  p.mouseMoved = function(event) {
+    current_drawers.mouseMoved(this, event.clientX, event.clientY)
   }
   
   
@@ -245,6 +248,7 @@ class DrawerSet {
     cvs.draw()
   }
   mouse(p,x,y) {
+    console.log("draw_02 mouse")
     if (x > window.innerHeight) return
     for(let y_drawers of this.drawers) {
       for(let drawer of y_drawers) {
@@ -252,7 +256,9 @@ class DrawerSet {
       }
     }
   }
+  
   mousewheel(p, x, y, count) {
+    console.log("draw_02 mouwheel")
     if (x > window.innerHeight) return
     for(let y_drawers of this.drawers) {
       for(let drawer of y_drawers) {
@@ -260,7 +266,15 @@ class DrawerSet {
       }
     }
   }
-
+  mouseMoved(p, x,y) {
+    console.log("draw_02 mouseMoved")
+    if (x > window.innerHeight) return
+    for(let y_drawers of this.drawers) {
+      for(let drawer of y_drawers) {
+        drawer.mouseMoved(p,x,y)
+      }
+    }
+  }
 
   key(key) {
     for(let y_drawers of this.drawers) {
