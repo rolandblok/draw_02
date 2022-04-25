@@ -36,7 +36,6 @@ class Drawer {
     }
 
     mouse(p, x,y){
-
         if ((x > this.Left) && (x < (this.Right)) && (y > this.Top) && (y < this.Bottom)) {
             this.gui_folder_defaults.open()
             this.gui_folder_draw_options.open()

@@ -1,6 +1,6 @@
 
 
-class MyTangle {
+class MyTriangle {
     constructor () {
         this.points = []
     }
