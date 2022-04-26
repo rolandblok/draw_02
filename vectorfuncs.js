@@ -150,7 +150,7 @@ const normal3=(v1,v2,v3)=>{
 const triangleArea2=(p1,p2,p3)=>{
     return Math.abs((p1[X]*(p2[Y]-p3[Y]) + p2[X]*(p3[Y]-p1[Y])+ p3[X]*(p1[Y]-p2[Y]))/2.0);    
 }
-const insideTriangle=(p1,p2,p3,p)=>{
+const insideTriangle2=(p1,p2,p3,p)=>{
     let area = triangleArea2(p1,p2,p3)
     let arear = triangleArea2(p,p2,p3) + triangleArea2(p1,p,p3)+triangleArea2(p1,p2,p)
     return (arear - area) <= FLOATING_POINT_ACCURACY

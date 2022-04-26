@@ -123,11 +123,12 @@ let sketch = function(p) {
   }
   p.mouseDragged = function(event) {
     console.log("mouseDragged " + p.mouseButton + " " + event.clientX + " " + event.clientY)
-    current_drawers.mouse(this, event.clientX, event.clientY)
+    current_drawers.mouseDragged(this, event.clientX, event.clientY)
+
   } 
   p.mousePressed = function(event) {
     // console.log("mousePressed " + event.button + " " + event.clientX + " " + event.clientY)
-    p.mouseDragged(event)
+    current_drawers.mousePressed(this, event.clientX, event.clientY)
   }
   p.mouseWheel = function(event) {
     current_drawers.mousewheel(this, event.clientX, event.clientY, event.delta / 100)
@@ -135,6 +136,14 @@ let sketch = function(p) {
   }
   p.mouseMoved = function(event) {
     current_drawers.mouseMoved(this, event.clientX, event.clientY)
+  }
+  p.mouseClicked = function(event) {
+    if (p.type !== "SVG") {
+      current_drawers.mouseClicked(this, event.clientX, event.clientY)
+    }
+  }
+  p.mouse = function(event) {
+    current_drawers.mouse(this, event.clientX, event.clientY)
   }
   
   
@@ -275,6 +284,34 @@ class DrawerSet {
       }
     }
   }
+  mouseClicked(p, x,y) {
+    console.log("draw_02 mouseClicked")
+    if (x > window.innerHeight) return
+    for(let y_drawers of this.drawers) {
+      for(let drawer of y_drawers) {
+        drawer.mouseClicked(p,x,y)
+      }
+    }
+  }
+  mousePressed(p, x,y) {
+    console.log("draw_02 mouseClicked")
+    if (x > window.innerHeight) return
+    for(let y_drawers of this.drawers) {
+      for(let drawer of y_drawers) {
+        drawer.mousePressed(p,x,y)
+      }
+    }
+  }
+  mouseDragged(p, x,y) {
+    console.log("draw_02 mouseDragged")
+    if (x > window.innerHeight) return
+    for(let y_drawers of this.drawers) {
+      for(let drawer of y_drawers) {
+        drawer.mouseDragged(p,x,y)
+      }
+    }
+  }
+
 
   key(key) {
     for(let y_drawers of this.drawers) {

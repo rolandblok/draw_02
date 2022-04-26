@@ -17,6 +17,7 @@
         this.fps = 0
         this.moving_fps =  new MyFPS(30)
         this.loop = false
+        this.triangles = new MyTriangles()
 
         this.gui_folder_draw_options.add(this, 'R1').onChange(function (v) { cvs.draw() }).min(10)
         this.gui_folder_defaults.add(this, 'zoom').listen()
@@ -40,39 +41,41 @@
     }
     
 
-    draw(p, fgc = [0,0,0], bgc = [255,255,255]) {
-        super.draw(p ,fgc,bgc)
+    draw(p5, fgc = [0,0,0], bgc = [255,255,255]) {
+        super.draw(p5 ,fgc,bgc)
         if (this.loop ) {
-            p.loop()
+            p5.loop()
         } else {
-            p.noLoop()
+            p5.noLoop()
         }
 
         this.moving_fps.add_frame()
         this.fps = this.moving_fps.get_fps()
 
         // p.translate(this.w/2, this.h/2)
-        p.resetMatrix()
-        p.translate(this.translation[X], this.translation[Y])
-        p.scale(this.zoom)
+        p5.resetMatrix()
+        p5.translate(this.translation[X], this.translation[Y])
+        p5.scale(this.zoom)
 
-        p.stroke("red") 
-        p.circle(this.grid_sel_x, this.grid_sel_y, 10)
+        // MOUSE
+        p5.stroke("red") 
+        p5.circle(this.grid_sel_x, this.grid_sel_y, 10)
 
-        p.stroke(fgc) 
+        // GRID
+        p5.stroke(fgc) 
         let p_lt = this.pix_to_draw([this.Left,this.Top])
         let p_rb = this.pix_to_draw([this.Right,this.Bottom])
         for(let x = p_lt[X]; x < p_rb[X]; x += this.grid) {
             for(let y = p_lt[Y]; y <p_rb[Y]; y += this.grid) {
                 let gp = this.point_to_grid([x,y])
-                p.point(gp[X], gp[Y])
+                p5.point(gp[X], gp[Y])
             }
         }
 
         let no_vertices = 0
         this.path_length = 0 
 
-
+        this.triangles.draw(p5)
 
         return no_vertices
     }
@@ -98,8 +101,12 @@
         // cvs.draw()
 
     }
-    mouse(p, x,y) {
+    mouseClicked(p, x,y) {
         super.mouse(p,x,y)
+        let gp = this.point_to_grid(this.pix_to_draw([x,y]))
+        this.triangles.addPoint(gp)
+
+
     }
     pix_to_draw(p) {
         let dp = new Array(2)

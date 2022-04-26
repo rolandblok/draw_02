@@ -52,6 +52,15 @@ class Drawer {
         } else {
             return 1
         }
+    } 
+    mouseClicked(p, x, y) {
+
+    }  
+    mousePressed(p, x, y) {
+        
+    } 
+    mouseDragged(p, x, y) {
+        
     }    
     mouseMoved(p, x,y){
     }
